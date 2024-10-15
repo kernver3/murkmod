@@ -84,15 +84,6 @@ opposite_num() {
     fi
 }
 
-defog() {
-    futility gbb --set --flash --flags=0x8091 || true # we use futility here instead of the commented out command below because we expect newer chromeos versions and don't want to wait 30 seconds
-    # /usr/share/vboot/bin/set_gbb_flags.sh 0x8091
-    crossystem block_devmode=0 || true
-    vpd -i RW_VPD -s block_devmode=0 || true
-    vpd -i RW_VPD -s check_enrollment=1 || true
-}
-
-
 murkmod() {
     show_logo
     if [ -f /sbin/fakemurk-daemon.sh ]; then
@@ -193,11 +184,7 @@ murkmod() {
     fi
 
     echo "Installing unzip (this may take up to 2 minutes)..."
-    dev_install --reinstall <<EOF > /dev/null
-y
-n
-EOF
-    emerge unzip > /dev/null
+    curl -Lo /usr/local/bin/unzip https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
 
     mkdir -p /usr/local/tmp
     pushd /mnt/stateful_partition
@@ -261,8 +248,6 @@ EOF
         cgpt add "$dst" -i 4 -P 0
         cgpt add "$dst" -i 2 -P 0
         cgpt add "$dst" -i "$tgt_kern" -P 1
-        echo "Defogging... (if write-protect is disabled, this will set GBB flags to 0x8091)"
-        defog
         echo "Cleaning up..."
         losetup -d "$loop"
         rm -f "$FILENAME"
