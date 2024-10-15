@@ -114,11 +114,8 @@ crossystem_values() {
         if [ "$key" == "mainfw_type" ]; then
             val="normal"
         fi
-        if [ "$key" == "mainfw_act" ]; then
-            val="A"
-        fi
         if [ "$key" == "cros_debug" ]; then
-            val=1
+            val=0
         fi
         if [ "$key" == "dev_boot_legacy" ]; then
             val=0
