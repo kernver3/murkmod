@@ -11,7 +11,7 @@ else
 fi
 
 get_asset() {
-    curl -s -f "https://api.github.com/repos/rainestorme/murkmod/contents/$1?ref=$BRANCH" | jq -r ".content" | base64 -d
+    curl -s -f "https://api.github.com/repos/kernver3/murkmod/contents/$1?ref=$BRANCH" | jq -r ".content" | base64 -d
 }
 
 get_asset_fakemurk() {
