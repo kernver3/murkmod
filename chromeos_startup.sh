@@ -48,25 +48,6 @@ if [ -z $DST ]; then
     DST=/dev/mmcblk0
 fi
 
-
-
-# funny boot messages
-# multi-liners
-cat <<EOF >/usr/share/chromeos-assets/text/boot_messages/en/block_devmode_virtual.txt
-Oh fuck - ChromeOS is trying to kill itself.
-ChromeOS detected developer mode and is trying to disable it to
-comply with FWMP. This is most likely a bug and should be reported to
-the murkmod GitHub Issues page.
-EOF
-cat <<EOF >/usr/share/chromeos-assets/text/boot_messages/en/self_repair.txt
-oops UwU i did a little fucky wucky and your system is trying to
-repair itself~ sorry OwO
-EOF
-
-# single-liners
-echo "i sure hope you did that on purpose (powerwashing system)" >/usr/share/chromeos-assets/text/boot_messages/en/power_wash.txt
-
-
 crossystem.old block_devmode=0 # prevent chromeos from comitting suicide
 
 # we stage sshd and mkfs as a one time operation in startup instead of in the bootstrap script
