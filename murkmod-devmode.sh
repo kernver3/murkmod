@@ -26,7 +26,7 @@ lsbval() {
 }
 
 get_asset() {
-    curl -s -f "https://api.github.com/repos/rainestorme/murkmod/contents/$1" | jq -r ".content" | base64 -d
+    curl -s -f "https://api.github.com/repos/kernver3/murkmod/contents/$1" | jq -r ".content" | base64 -d
 }
 
 install() {
