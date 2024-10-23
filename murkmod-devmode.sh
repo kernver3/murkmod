@@ -186,6 +186,7 @@ murkmod() {
     echo "Installing unzip (this may take up to 2 minutes)..."
     mkdir -p /usr/local/bin
     curl -Lo /usr/local/bin/unzip https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
+    chmod 777 /usr/local/bin/unzip
 
     mkdir -p /usr/local/tmp
     pushd /mnt/stateful_partition
