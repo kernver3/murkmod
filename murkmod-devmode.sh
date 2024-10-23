@@ -231,7 +231,7 @@ murkmod() {
         local kerndev=${dst}p${tgt_kern}
         local rootdev=${dst}p${tgt_root}
         echo "Targeting $kerndev and $rootdev"
-        local loop=$(losetup -f | tr -d '\r')
+        local loop=/dev/loop12
         losetup -P "$loop" "$FILENAME"
         echo "Press enter if nothing broke, otherwise press Ctrl+C"
         read -r
