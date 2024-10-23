@@ -193,7 +193,7 @@ main() {
   local bin=$1
   
   echo "Creating loop device..."
-  local loop=$(losetup -f | sed 's/FINDING FREE!!!//')
+  local loop=/dev/loop12
   losetup -P "$loop" "$bin"
 
   echo "Disabling kernel verity..."
