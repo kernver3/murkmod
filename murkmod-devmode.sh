@@ -196,8 +196,10 @@ murkmod() {
     pushd /mnt/stateful_partition
         set -e
         echo "Installing unzip..."
-        curl --progress-bar -Lko /usr/local/tmp/unzip https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
-        chmod 777 /usr/local/tmp/unzip
+        curl --progress-bar -Lko /usr/local/tmp/busybox https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
+        ln -s /usr/local/tmp/busybox /usr/local/tmp/unzip
+        ln -s /usr/local/tmp/busybox /usr/local/tmp/losetup
+        chmod 777 /usr/local/tmp/*
         echo "Downloading recovery image from '$FINAL_URL'..."
         curl --progress-bar -k "$FINAL_URL" -o recovery.zip
         echo "Unzipping image... (this may take a while)"
@@ -238,8 +240,8 @@ murkmod() {
         local kerndev=${dst}p${tgt_kern}
         local rootdev=${dst}p${tgt_root}
         echo "Targeting $kerndev and $rootdev"
-        local loop=$(losetup -f | tr -d '\r')
-        losetup -P "$loop" "$FILENAME"
+        local loop=$(/usr/local/tmp/losetup -f | tr -d '\r')
+        /usr/local/tmp/losetup -P "$loop" "$FILENAME"
         echo "Press enter if nothing broke, otherwise press Ctrl+C"
         read -r
         printf "Nuking partitions in 3 (this is your last chance to cancel)..."
@@ -260,7 +262,7 @@ murkmod() {
         echo "Defogging... (if write-protect is disabled, this will set GBB flags to 0x8091)"
         defog
         echo "Cleaning up..."
-        losetup -d "$loop"
+        /usr/local/tmp/losetup -d "$loop"
         rm -f "$FILENAME"
     popd
 
