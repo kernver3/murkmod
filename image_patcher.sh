@@ -193,8 +193,8 @@ main() {
   local bin=$1
   
   echo "Creating loop device..."
-  local loop=$(losetup -f)
-  losetup -P "$loop" "$bin"
+  local loop=$(/usr/local/tmp/losetup -f)
+  /usr/local/tmp/losetup -P "$loop" "$bin"
 
   echo "Disabling kernel verity..."
   $SSD_UTIL --debug --remove_rootfs_verification -i ${loop} --partitions 4
@@ -241,7 +241,7 @@ main() {
 
   umount "$ROOT"
   sync
-  losetup -D "$loop"
+  /usr/local/tmp/losetup -D "$loop"
   sync
   sleep 2
   rm -rf /tmp/mnt
